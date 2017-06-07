@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,6 @@ public class Patient {
 
     private long id;
 
-    @FormParam("gender")
     private String gender;
 
     private Date birthday;
@@ -37,12 +37,20 @@ public class Patient {
         return gender;
     }
 
+    @FormParam("gender")
     public void setGender(String gender) {
         this.gender = gender;
     }
 
     public Date getBirthday() {
         return birthday;
+    }
+
+    public Integer getYear() {
+        if (birthday == null) return 0;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(birthday);
+        return cal.get(Calendar.YEAR);
     }
 
     public void setBirthday(Date birthday) {

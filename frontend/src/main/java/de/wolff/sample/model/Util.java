@@ -17,4 +17,10 @@ class Util {
         }
     }
 
+    static String dateToWWWForm(Date date){
+        if (date == null) return null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+
 }

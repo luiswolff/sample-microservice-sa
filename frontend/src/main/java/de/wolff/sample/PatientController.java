@@ -1,10 +1,11 @@
 package de.wolff.sample;
 
 import de.wolff.sample.model.*;
+import org.glassfish.jersey.server.mvc.Viewable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.*;
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.*;
@@ -12,11 +13,10 @@ import javax.ws.rs.core.Response.StatusType;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
 @Produces(MediaType.TEXT_HTML)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-@Path("")
+@Path("frontend")
+@Singleton
 public class PatientController {
 
     private Client client;
@@ -28,7 +28,7 @@ public class PatientController {
 
         final String schema = System.getProperty("backend.SCHEMA", "http");
         final String host = System.getProperty("backend.HOST", "localhost");
-        final Integer port = Integer.getInteger("backend.PORT", 8080);
+        final Integer port = Integer.getInteger("backend.PORT", 8081);
         final String path = System.getProperty("backend.PATH", "backend/api");
 
         final String endpoint = System.getProperty("backend.ENDPOINT", schema + "://" + host + ":" + port + "/" + path);
@@ -43,7 +43,7 @@ public class PatientController {
         List<Patient> patients = backend.path("patients")
                 .request(MediaType.APPLICATION_JSON)
                 .get(new GenericType<List<Patient>>(){});
-        return new Viewable("/WEB-INF/pages/all_patients.jsp", patients);
+        return new Viewable("/pages/all_patients.ftl", patients);
     }
 
     @POST
@@ -60,7 +60,7 @@ public class PatientController {
     @GET
     @Path("createPatient.html")
     public Viewable patientFormula(){
-        return new Viewable("/WEB-INF/pages/single_patient.jsp");
+        return new Viewable("/pages/single_patient.ftl");
     }
 
     @POST
@@ -78,7 +78,7 @@ public class PatientController {
     public Viewable editPatient(@PathParam("patientId") long patientId){
         Patient patient = backend.path("patients/" + patientId).request(MediaType.APPLICATION_JSON).get(Patient.class);
         if (patient != null){
-            return new Viewable("/WEB-INF/pages/single_patient.jsp", patient);
+            return new Viewable("/pages/single_patient.ftl", patient);
         } else {
             throw new NotFoundException();
         }
@@ -100,7 +100,7 @@ public class PatientController {
         Patient patient = backend.path("patients/" + patientId + "/diagnoses")
                 .request(MediaType.APPLICATION_JSON)
                 .get(Patient.class);
-        return new Viewable("/WEB-INF/pages/diagnoses.jsp", patient);
+        return new Viewable("/pages/diagnoses.ftl", patient);
     }
 
     @POST
@@ -129,7 +129,7 @@ public class PatientController {
         Patient patient = backend.path("patients/" + patientId + "/medications")
                 .request(MediaType.APPLICATION_JSON)
                 .get(Patient.class);
-        return new Viewable("/WEB-INF/pages/medications.jsp", patient);
+        return new Viewable("/pages/medications.ftl", patient);
     }
 
     @POST

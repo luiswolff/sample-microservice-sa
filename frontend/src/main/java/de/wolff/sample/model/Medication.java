@@ -43,6 +43,10 @@ public class Medication {
         this.atc = atc;
     }
 
+    public String getSinceAsString(){
+        return Util.dateToWWWForm(since);
+    }
+
     public Date getSince() {
         return since;
     }
@@ -59,6 +63,10 @@ public class Medication {
     @FormParam("until")
     public void setUntil(String until) {
         this.until = Util.dateFromWWWForm(until);
+    }
+
+    public String getUntilAsString(){
+        return Util.dateToWWWForm(until);
     }
 
     public String getName() {

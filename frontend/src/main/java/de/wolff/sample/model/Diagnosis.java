@@ -71,6 +71,10 @@ public class Diagnosis {
         this.date = Util.dateFromWWWForm(date);
     }
 
+    public String getDateAsString(){
+        return Util.dateToWWWForm(date);
+    }
+
     public static List<Diagnosis> from(MultivaluedMap<String, String> formula) {
         int count = Integer.parseInt(formula.getFirst("count"));
         List<String> names = formula.get("diagnosis");
