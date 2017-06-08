@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 @Produces(MediaType.TEXT_HTML)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-@Path("frontend")
+@Path("/frontend")
 @Singleton
 public class PatientController {
 
@@ -160,8 +160,7 @@ public class PatientController {
     private Response ifOkSeeOther(StatusType status, String method, Object ... templateVariables) {
         return ifOkAnswer(status, () -> Response
                 .seeOther(UriBuilder
-                        .fromPath("/frontend")
-                        .path(PatientController.class)
+                        .fromResource(PatientController.class)
                         .path(PatientController.class, method)
                         .build(templateVariables))
                 .build());

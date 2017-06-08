@@ -22,7 +22,7 @@
                 <tr>
                     <td><a href="/frontend/${patient.id}/edit.html">${patient.id}</a></td>
                     <td><#if patient.gender == 'M'>Male<#else>Female</#if> </td>
-                    <td>${patient.year}</td>
+                    <td>${patient.birthday?string('yyyy')}</td>
                     <td><a href="/frontend/${patient.id}/diagnoses.html">${patient.diagnoses?size}</a></td>
                     <td><a href="/frontend/${patient.id}/medications.html">${patient.medications?size}</a></td>
                 </tr>

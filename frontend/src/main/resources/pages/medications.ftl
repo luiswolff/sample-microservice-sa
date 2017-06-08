@@ -35,8 +35,8 @@
         <tbody>
         <#list model.medications as medication>
             <tr>
-                <td><input type="date" name="since" value="${medication.sinceAsString}" required=""  title="The date since the patientId gets this medication"/> </td>
-                <td><input type="date" name="until" value="${medication.untilAsString!}" title="The date until the patientId will or has get this medication" /></td>
+                <td><input type="date" name="since" value="${medication.since?string('yyyy-MM-dd')}" required=""  title="The date since the patientId gets this medication"/> </td>
+                <td><input type="date" name="until" value="${medication.until?string('yyyy-MM-dd')!}" title="The date until the patientId will or has get this medication" /></td>
                 <td><input type="text" name="name" value="${medication.name}" title="The name of this medication" /></td>
                 <td><input type="text" name="activeIngredient" value="${medication.activeIngredient!}" title="The active ingredient of this medication" /></td>
                 <td><input type="number" name="dose" value="${medication.dose!}" title="The doses of the medication" /></td>
