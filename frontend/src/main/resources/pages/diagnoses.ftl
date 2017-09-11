@@ -4,19 +4,19 @@
 <head>
     <title>Diagnoses for Patient ${model.id}</title>
 </head>
-<body>
+<body id="patients:${model.id}">
     <table>
         <caption><h1>Patient ${model.id}</h1></caption>
         <tr>
             <th>Birthday</th>
-            <td>${model.year}"</td>
+            <td>${model.year}</td>
         </tr>
         <tr>
             <th>Gender</th>
             <td>${model.gender}</td>
         </tr>
     </table>
-    <form action="/frontend/${model.id}/diagnoses.html" method="post">
+    <form id="patients:${model.id}:diagnosis" action="/frontend/${model.id}/diagnoses.html" method="post">
         <input type="hidden" name="count" value="${model.diagnoses?size}" />
         <table>
             <caption><h2>Diagnoses</h2></caption>
@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <#list model.diagnoses as diagnosis >
-                    <tr>
+                    <tr id="patients:${model.id}:diagnosis:${diagnosis?counter}">
                         <td>
                             <input type="text" name="diagnosis" value="${diagnosis.diagnosis}" required=""  title="The Name of the diagnosis"/>
                         </td>
@@ -44,12 +44,20 @@
                             <input type="text" name="icdVersion" value="${diagnosis.icdVersion!}" title="The Vesion of the ICD-10 for the diagnosis" />
                         </td>
                     </tr>
+                <#else>
+                    <tr>
+                        <td colspan="4">
+                            <p align="center">
+                                Keine Diagnose für diesen Patienten hinterlegt
+                            </p>
+                        </td>
+                    </tr>
                 </#list>
             </tbody>
         </table>
         <input type="submit" />
     </form>
-    <form action="/frontend/${model.id}/diagnoses/add" method="post">
+    <form id="patients:${model.id}:diagnosis-add" action="/frontend/${model.id}/diagnoses/add" method="post">
         <table>
             <caption><h2>Add Diagnosis</h2></caption>
             <tr>

@@ -69,6 +69,18 @@
                     </transformers>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>target/backend.jar</argument>
+                    </arguments>
+                    <async>true</async>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

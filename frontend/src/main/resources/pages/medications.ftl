@@ -5,7 +5,7 @@
     <title>Medications for Patient ${model.id}</title>
 </head>
 <body>
-<table>
+<table id="patients:${model.id}">
     <caption><h1>Patient ${model.id}</h1></caption>
     <tr>
         <th>Birthday</th>
@@ -16,7 +16,7 @@
         <td>${model.gender}</td>
     </tr>
 </table>
-<form action="/frontend/${model.id}/medications.html" method="post">
+<form id="patients:${model.id}:medications" action="/frontend/${model.id}/medications.html" method="post">
     <input type="hidden" name="count" value="${model.medications?size}" />
     <table>
         <caption><h2>Medications</h2></caption>
@@ -34,7 +34,7 @@
         </thead>
         <tbody>
         <#list model.medications as medication>
-            <tr>
+            <tr id="patients:${model.id}:medications:${medication?counter}">
                 <td><input type="date" name="since" value="${medication.since?string('yyyy-MM-dd')}" required=""  title="The date since the patientId gets this medication"/> </td>
                 <td><input type="date" name="until" value="${medication.until?string('yyyy-MM-dd')!}" title="The date until the patientId will or has get this medication" /></td>
                 <td><input type="text" name="name" value="${medication.name}" title="The name of this medication" /></td>
@@ -44,12 +44,18 @@
                 <td><input type="text" name="pzn" value="${medication.pzn!}" title="The central pharmaceutical number" /></td>
                 <td><input type="text" name="atc" value="${medication.atc!}" title="The chemical classification" /></td>
             </tr>
+        <#else >
+            <tr>
+                <td colspan="8">
+                    <p align="center">Keine Medikation für diesen Patienten hinterlegt</p>
+                </td>
+            </tr>
         </#list>
         </tbody>
     </table>
     <input type="submit" />
 </form>
-<form action="/frontend/${model.id}/medications/add" method="post">
+<form id="patients:${model.id}:medications-add" action="/frontend/${model.id}/medications/add" method="post">
     <table>
         <caption><h2>Add Medication</h2></caption>
         <tr>
