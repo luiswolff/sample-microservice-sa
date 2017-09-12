@@ -75,6 +75,7 @@
                 <configuration>
                     <executable>java</executable>
                     <arguments>
+                        <argument>-Dfile.encoding=UTF8</argument>
                         <argument>-jar</argument>
                         <argument>target/backend.jar</argument>
                     </arguments>
